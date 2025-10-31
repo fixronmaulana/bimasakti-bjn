@@ -1,0 +1,35 @@
+// scss/_variables.scss (Menggunakan @import untuk mengatasi error)
+
+// 1. Import fungsi dan variabel default Bootstrap (metode lama)
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+// 2. Override Variabel Warna sesuai branding Bojonegoro
+$green-bojonegoro: #449D44; 
+$primary:          $green-bojonegoro; 
+$danger:           #dc3545;
+$warning:          #ffc107;
+
+// 3. Modifikasi map warna Bootstrap
+$theme-colors: map-merge(
+    $theme-colors,
+    (
+        "primary": $primary,
+        "warning": $warning
+    )
+);
+
+// --- FONT STACKS (Google Fonts) ---
+$font-family-sans-serif:      'Plus Jakarta Sans', sans-serif; // Digunakan sebagai Body Font (Label Jalan, Teks Umum)
+$font-family-headings:        'Manrope', sans-serif;           // Digunakan untuk Judul
+$font-family-ui:              'Nunito Sans', sans-serif;       // Digunakan untuk UI Elements
+$font-family-highlight:       'Space Grotesk', sans-serif;     // Digunakan untuk Highlight/Digital
+
+// Override Font Family Bootstrap Default
+$font-family-base:            $font-family-sans-serif;
+$headings-font-family:        $font-family-headings;
+
+// Override layout variables
+$navbar-padding-y: 0.5rem;
+$spacer: 1rem; 
+$border-radius: .75rem;

@@ -1,0 +1,43 @@
+// scss/_layout.scss
+
+// Styling untuk Halaman Login
+.login-page {
+    background-color: #f0f2f5; 
+    
+    .login-logo {
+        height: 60px;
+    }
+
+    .login-card {
+        max-width: 420px;
+        width: 100%;
+        border-radius: 12px;
+    }
+}
+
+// Styling untuk Dashboard
+.dashboard-main {
+    position: relative;
+    width: 100%;
+    // Menggunakan calc untuk tinggi, mengurangi tinggi navbar (sekitar 58px)
+    height: 100vh;
+    margin-top: 0px; 
+    overflow: hidden;
+
+    @media (max-width: 991px) {
+        // Tinggi map tetap 100vh, navigasi akan mengambang di atasnya
+    }
+}
+
+body {
+    font-family: $font-family-base;
+}
+
+.map-full-screen {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}

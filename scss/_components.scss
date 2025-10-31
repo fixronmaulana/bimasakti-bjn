@@ -1,0 +1,291 @@
+// scss/_components.scss
+
+// WAJIB: Impor modul color di sini untuk menggunakan color.adjust()
+@use "sass:color";
+
+$menu-vertical-padding: $spacer * 0.5; // Padding vertikal container menu
+$menu-horizontal-gutter: $spacer * 1;  // Jarak antar item menu (Gutter)
+$menu-item-height: 38px; // Tinggi standar semua elemen menu
+$menu-edge-padding: $spacer * 1; // Padding kiri dan kanan container
+
+.header-logo {
+    height: 50px; 
+}
+
+/* --- Styling Logo Multi-Baris dan Penyeimbangan --- */
+.navbar-logo-area {
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 1.1;
+    height: 70px;
+    align-items: center !important; 
+
+    .brand-subtitle {
+        font-size: 0.85rem; 
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.7);
+        margin-bottom: 0;
+        line-height: 1;
+        font-family: $font-family-ui;
+    }
+
+    .brand-title {
+        font-size: 1.1rem;
+        font-weight: bold;
+        display: block;
+        color: black;
+        line-height: 1.1;
+        font-family: $font-family-headings;
+    }
+
+    @media (max-width: 991px) {
+        height: 55px; 
+        .header-logo {
+            height: 40px; 
+        }
+        .brand-subtitle {
+            font-size: 0.75rem; 
+        }
+        .brand-title {
+            font-size: 1rem; 
+        }
+    }
+}
+
+/* --- Input Pencarian --- */
+.search-form {
+    align-items: center;
+    
+    // Hapus semua margin horizontal
+    margin-left: 0; 
+    margin-right: 0 !important; 
+    display: flex;
+
+    .search-input {
+        background-color: rgba(0, 0, 0, 0.1); 
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        color: black; 
+        width: 250px;
+        padding-right: 40px; 
+        transition: width 0.3s ease-in-out;
+        
+        // **KOREKSI VERTIKAL:** Tinggi tetap dan padding minimal
+        height: $menu-item-height;
+        padding-top: 0.25rem; 
+        padding-bottom: 0.25rem;
+        padding-left: 1rem;
+        line-height: 1.5;
+        
+        &::placeholder {
+            color: rgba(0, 0, 0, 0.5); 
+        }
+    }
+    .btn-search {
+        background: transparent;
+        color: black;
+        margin-left: -45px;
+        position: relative;
+        z-index: 5;
+    }
+    
+    @media (max-width: 991px) {
+        display: none !important;
+    }
+}
+
+
+/* --- Menu Navigasi (Efek Floating Card & Frosted Glass) --- */
+.floating-menu {
+    /* ---------------------------------------------------- */
+    /* DEFAULT (LAYAR LEBAR - DESKTOP/LAPTOP) */
+    /* ---------------------------------------------------- */
+
+    // Background semi-transparan (Frosted Glass)
+    background-color: rgba(255, 255, 255, 0.75); 
+    
+    // Border Radius Kustom (Hanya Bulat di Kiri)
+    border-radius: 2rem 0 0 2rem; 
+    
+    // **PERBAIKAN PADDING CONTAINER**
+    // Atur padding atas/bawah. Padding kiri/kanan diatur oleh margin item.
+    padding: $menu-vertical-padding 0; 
+    
+    // Shadow Tipis dan Rata
+    box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.1); 
+    
+    // Efek Frosted Glass (Blur)
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    
+    // **PERBAIKAN KESEIMBANGAN JARAK (GUTTER)**
+    // Item pertama (Home) butuh padding kiri agar tidak nempel dengan background
+    padding-left: $menu-edge-padding;
+    padding-right: $menu-edge-padding;
+    
+    // Terapkan margin horizontal seragam ke semua anak langsung
+    > *:not(:last-child) {
+        margin-right: $menu-horizontal-gutter * 0.5; // Jarak kanan untuk semua item kecuali terakhir
+    }
+    
+    > *:not(:first-child) {
+        margin-left: $menu-horizontal-gutter * 0.5; // Jarak kiri untuk semua item kecuali pertama
+    }
+    
+    .nav-item {
+        margin: 0;
+        display: flex;
+        align-items: center; // Pastikan item sejajar vertikal
+    }
+    
+    .nav-link {
+        color: #333 !important;
+        font-family: $font-family-ui; 
+        font-weight: 500;
+        border-radius: 1.5rem; 
+        
+        // **PERBAIKAN KESEJAJARAN VERTIKAL**
+        // Tinggi tetap dan padding yang seimbang
+        height: $menu-item-height;
+        display: flex;
+        align-items: center;
+        padding: 0.25rem $spacer * 0.875 !important; // Padding horizontal lebih kecil
+        line-height: 1.5;
+        position: relative; // Untuk pseudo-element
+        z-index: 1;
+        
+        transition: all 0.3s ease-in-out; 
+        background-color: transparent; 
+
+        // Ikon Interaktif
+        i {
+            transition: transform 0.3s ease-out;
+            display: inline-block;
+            position: relative;
+            z-index: 2; // Pastikan ikon di atas pseudo-element
+        }
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            i {
+                transform: translateY(-2px); 
+            }
+        }
+        
+        &.active {
+            background-color: white !important; 
+            color: #333 !important; 
+            font-weight: 700;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            
+            i {
+                transform: none; 
+            }
+            
+            // Pseudo-element untuk efek slide
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background-color: #dc3545;
+                border-radius: 1.5rem;
+                transition: left 0.4s ease-in-out;
+                z-index: -1;
+            }
+            
+            // Hover pada menu yang aktif
+            &:hover {
+                color: white !important;
+                
+                &::before {
+                    left: 0; // Slide dari kiri ke kanan
+                }
+            }
+        }
+
+        /* --- Tombol Akun (Pengganti Logout) --- */
+        &.btn-account {
+            background-color: $primary !important;
+            color: white !important;
+            font-size: 1rem; 
+            border-radius: 1.5rem;
+            
+            // **PERBAIKAN KESEJAJARAN VERTIKAL**
+            // Tinggi dan padding sama dengan elemen lain
+            height: $menu-item-height;
+            padding: 0.25rem $spacer * 0.75 !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            transition: all 0.3s ease-in-out;
+            
+            &:hover {
+                background-color: color.adjust($primary, $lightness: -10%) !important;
+                box-shadow: 0 4px 10px rgba($primary, 0.5); 
+                
+                i {
+                    transform: rotate(10deg);
+                }
+            }
+        }
+
+        &.btn-danger {
+            display: none !important;
+        }
+    }
+
+    /* ---------------------------------------------------- */
+    /* RESPONSIVE (LAYAR SEMPIT - MOBILE/TABLET) */
+    /* ---------------------------------------------------- */
+
+    @media (max-width: 991px) {
+        // Hapus efek floating card dan buat menu standar
+        background-color: transparent; 
+        box-shadow: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        
+        border-radius: 0; 
+        padding: 0; 
+        margin-top: $spacer; 
+
+        // Hapus margin seragam di mobile
+        > * {
+            margin-left: 0;
+            margin-right: 0;
+        }
+        
+        // Buat item menu mengambil lebar penuh
+        .nav-item {
+            margin: $spacer * 0.25 0; 
+        }
+        
+        .nav-link {
+            border-radius: $border-radius; 
+            color: black !important; 
+            height: auto; // Reset tinggi di mobile
+            
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.05); 
+            }
+            
+            &.active {
+                background-color: #f0f0f0 !important; 
+                color: #333 !important; 
+                box-shadow: none; 
+            }
+
+            &.btn-account {
+                width: 100%;
+                display: block; 
+                font-size: 1rem;
+                padding: $spacer * 0.5 $spacer * 1.25 !important; 
+            }
+        }
+    }
+}
